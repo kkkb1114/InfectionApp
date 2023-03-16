@@ -232,7 +232,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
-     * 툴바 세팅
+     * 툴바 세팅.
      **/
     public void setToolbar() {
         setSupportActionBar(toolbar_connect);
