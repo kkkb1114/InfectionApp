@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
             alarm_sound_inflammation_boolean = PreferenceManager.getBoolean(context, "alarm_sound_inflammation_boolean");
         }
     }
-
+//
     /**
      * 노티피케이션 세팅
      **/
