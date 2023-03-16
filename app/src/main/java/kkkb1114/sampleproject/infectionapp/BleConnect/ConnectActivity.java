@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -147,6 +148,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
                 super.onScanResult(callbackType, result);
                 checkBlePermission();
                 processResult(result);
+                Log.i("onScanResult", "111");
             }
 
             @Override
@@ -156,6 +158,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
                 for (ScanResult result : results) {
                     processResult(result);
                 }
+                Log.i("onBatchScanResults", "111");
             }
 
             @Override
@@ -183,9 +186,9 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
                         if (!scanBleDeviceAddressList.contains(deviceAddress) &&
                                 deviceName.contains(FD)) {
 
-                            if (deviceName.contains(":")){
+                            if (deviceName.contains(":")) {
                                 trim = deviceName.trim();
-                            }else {
+                            } else {
                                 trim = deviceName.split(":")[0];
                             }
                             Log.d(TAG, "deviceName = " + deviceName + ", address = " + deviceAddress + ", comingDeviceName = " + trim);
@@ -214,10 +217,12 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
      * 스캔 시작, 정지
      **/
     public void setBleScanTime() {
-        checkBlePermission();
         if (bluetoothLeScanner != null && scanCallback != null) {
-            //bluetoothLeScanner.startScan(scanCallback);
-            bluetoothLeScanner.startScan(scanFilters, setting, scanCallback);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+
+                bluetoothLeScanner.startScan(scanFilters, setting, scanCallback);
+                return;
+            }
         }
 
         Timer timer = new Timer();
@@ -228,7 +233,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
                 bluetoothLeScanner.stopScan(scanCallback);
             }
         };
-        timer.schedule(timerTask, 7200 * 1000);
+        timer.schedule(timerTask, 600 * 1000);
     }
 
     /**
@@ -280,6 +285,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
                 });
                 return false;
             } else {
+                setBleScanTime();
                 return true;
             }
         } else {
@@ -294,6 +300,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
                 });
                 return false;
             } else {
+                setBleScanTime();
                 return true;
             }
         }
@@ -315,7 +322,9 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
 
                     /** 권한이 허용되어있는지 항상 체크하고 되어있을때만 블루투스 검색을 한다. **/
                     setBleScanTime();
+                    Log.i("권한허용", "111");
                 } else {
+                    Log.i("권한거부", "111");
                     // 권한이 거부되었을 때 실행할 코드
                     rv_ble_list.setVisibility(View.GONE);
                     tv_location_permission_warning.setVisibility(View.VISIBLE);

@@ -114,41 +114,8 @@ public class TestService extends Service {
 
     int cnt = 0;
 
-
-
-
-
-
-
-
-    private static final String TAG = "HysorPatchSearching";
     private static final int NOTIFICATION_ID = 1;
     final String CHANNEL_ID = "hysorpatch_notification_channel";
-    public static String saveStorage = ""; //저장된 파일 경로
-    public static String saveData = ""; //저장된 파일 내용
-    // 권한 체크
-    private PermissionManager permissionManager;
-    // 블루투스
-    private ScanCallback scanCallback;
-    private BluetoothManager bluetoothManager;
-    private BluetoothAdapter bluetoothAdapter;
-    private BluetoothLeScanner bluetoothLeScanner;
-    //private ArrayList<String> scanBleDeviceAddressList; // 블루투스 기기 목록 중복 체크를 위한 ArrayList
-    private ArrayList<BluetoothDevice> scanBleDeviceList;
-    private ArrayList<ScanFilter> scanFilters;
-    private ScanSettings setting;
-
-    private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothLeScanner mScanner;
-    private ScanSettings mSettings;
-    private ArrayList mArrayList;
-    private ScanCallback mScanCallback;
-    private String mDeviceName;
-    private BluetoothDevice mDevice;
-    private HashMap<String, String> mRegisteredDevice = new HashMap<>();
-    private int mRssi;
-
-
 
     @Nullable
     @Override
@@ -166,8 +133,6 @@ public class TestService extends Service {
 
         createNotificationChannel();
 
-
-
         // 이동하려는 액티비티를 작성해준다.
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
         // 노티에 전달 값을 담는다.
@@ -184,22 +149,16 @@ public class TestService extends Service {
         }
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("하하하")
-                .setContentText("내용 하하하")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle("감염 체온")
+                .setContentText("현재 체온 측정 기능이 동작하고 있습니다.")
+                .setSmallIcon(R.drawable.pill)
                 .setContentIntent(pendingIntent)
                 .build();
         startForeground(NOTIFICATION_ID, notification);
 
-
         setUser();
-        initView();
 
         MeasurBodyTempreture();
-
-
-
-
     }
     public void setUser() {
         select_user = context.getSharedPreferences("login_user", MODE_PRIVATE);
@@ -209,17 +168,6 @@ public class TestService extends Service {
         if (username.equals("선택된 사용자 없음")) {
             Toast.makeText(getApplicationContext(), "사용자 등록을 완료해주세요.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void initView() {
-        scanFilters = new ArrayList<>();
-        //.setDeviceAddress("84:AD:8D:6A:EB:9F")
-        ScanFilter scanFilter = new ScanFilter.Builder()
-                .build();
-        scanFilters.add(scanFilter);
-        scanBleDeviceList = new ArrayList<>();
-        //scanBleDeviceAddressList = new ArrayList<>();
-        permissionManager = new PermissionManager();
     }
 
     public void MeasurBodyTempreture() {
@@ -267,7 +215,6 @@ public class TestService extends Service {
                         } else {
                             cnt++;
                         }
-
                     }
                 }
 
@@ -294,8 +241,6 @@ public class TestService extends Service {
                 tempData = s; // 이건 static으로 현재 체온을 받아 다른 클래스에서 사용하기 위함이고 아래 tempData()메소드로 값을 받을 수 있다.
                 setNotification(s);
                 Log.d("------------", String.valueOf(tempStack.size()));
-
-
             }
         }).start();
     }
@@ -471,12 +416,14 @@ public class TestService extends Service {
             }
         }
     }
+
     public long getFormatTimeNow(long time) {
         Date mReDate = new Date(time);
         SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String formatDate = mFormat.format(mReDate);
         return Long.parseLong(formatDate);
     }
+
     public void getAlarmCriteria() {
         PreferenceManager.PREFERENCES_NAME = "login_user";
         String select_user_name = PreferenceManager.getString(context, "userName");
@@ -495,91 +442,6 @@ public class TestService extends Service {
         }
     }
 
-    /** 블루투스 스캔 결과 저장 **/
-    public void setSaveText(String data, String nowTime) {
-        try {
-            saveData = data;
-            // 파일 생성
-            File storeageFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-            // 폴더 생성
-            if (!storeageFile.exists()) { // 폴더 없으면
-                storeageFile.mkdir(); // 폴더 생성
-            }
-
-            String textFileName = "/hysorpatch_TestData.txt";
-
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(storeageFile + textFileName, false));
-            bufferedWriter.append("[" + nowTime + "]" + "\n[" + saveData + "]"); //TODO 날짜 쓰기
-            bufferedWriter.newLine();
-            bufferedWriter.close();
-
-            saveStorage = String.valueOf(storeageFile + textFileName);
-            PreferenceManager.setString(getApplication(), "saveStorage", String.valueOf(saveStorage)); //TODO 프리퍼런스에 경로 저장한다
-
-            Log.d("---", "---");
-            Log.w("//===========//", "================================================");
-            Log.d("", "\n" + "[A_TextFile > 저장한 텍스트 파일 확인_저장]");
-            Log.d("", "\n" + "[경로 : " + String.valueOf(saveStorage) + "]");
-            Log.d("", "\n" + "[저장 시간 : " + String.valueOf(nowTime) + "]");
-            Log.d("", "\n" + "[ble 개수 : " + String.valueOf(saveData) + "]");
-            Log.w("//===========//", "================================================");
-            Log.d("---", "---");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /** 블루투스 스캔 결과 기존 파일 불러서 이어서 저장 **/
-    public void getFile_saveText(String saveData, String saveStorage, String nowTime){
-        try {
-            File file = new File(saveStorage);
-
-            FileWriter fileWriter = new FileWriter(file, true); // true면 파일 끝에 data 추가됨
-
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-            bufferedWriter.append("[" + nowTime + "]" + "\n[" + saveData + "]");
-            bufferedWriter.newLine(); // 개행 문자 추가
-
-            Log.d("---", "---");
-            Log.w("//===========//", "================================================");
-            Log.d("", "\n" + "[A_TextFile > 저장한 텍스트 파일 확인_추가]");
-            Log.d("", "\n" + "[경로 : " + String.valueOf(saveStorage) + "]");
-            Log.d("", "\n" + "[저장 시간 : " + String.valueOf(nowTime) + "]");
-            Log.d("", "\n" + "[ble 개수 : " + String.valueOf(saveData) + "]");
-            Log.w("//===========//", "================================================");
-            Log.d("---", "---");
-
-            bufferedWriter.close();
-            fileWriter.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /** 경로에 파일 정말 없는지 확인 **/
-    public boolean checkFile(){ // 쉐어드는 없고 파일은 있을수 있어서 추가
-        Log.e("checkFile", "checkFile");
-        File storeageFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-        // 폴더 생성
-        if (!storeageFile.exists()) { // 폴더 없으면
-            storeageFile.mkdir(); // 폴더 생성
-        }
-        String textFileName = "/hysorpatch_TestData.txt";
-        saveStorage = String.valueOf(storeageFile + textFileName);
-        File file = new File(saveStorage);
-
-        if (file.exists()){ // 있으면
-            Log.e("checkFile", "있음");
-            return true;
-        }else { // 없으면
-            Log.e("checkFile", "없음");
-            return false;
-        }
-    }
-
-
     /**
      * 오레오 이상 버전부턴 startForegroundService()로 서비스 실행시 Notificaiton Channel과 Notification를 만들어 Notification를 등록해야한다.
      **/
@@ -593,230 +455,10 @@ public class TestService extends Service {
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.enableVibration(true);
-            notificationChannel.setDescription("하하하하");
+            notificationChannel.setDescription("감염 체온");
 
             NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(notificationChannel);
-        }
-    }
-
-    /** 블루투스 세팅 **/
-    public void setBluetoothBLE() {
-        // bluetoothManager, bluetoothAdapter 세팅
-        bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        bluetoothAdapter = bluetoothManager.getAdapter();
-        // 블루투스가 지원되지 않는 경우 bluetoothAdapter가 null이 뜬다.
-        if (bluetoothAdapter == null) {
-        } else {
-            // 블루투스가 꺼져있는지 확인
-            if (bluetoothAdapter.isEnabled()) {
-                // 스캐너 생성
-                bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
-                // 스캔 설정
-                //.setReportDelay(7200*1000)
-                setting = new ScanSettings.Builder()
-                        .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                        .setReportDelay(600*1000)
-                        .build();
-                // 스캔 콜백 메소드
-                setBLEScanCallback();
-                // 스캔 시작
-                setBleScanTime();
-            }
-        }
-    }
-
-
-    /** 스캔 시작, 정지 **/
-    public void setBleScanTime(){
-        checkBlePermission();
-        //bluetoothLeScanner.startScan(scanFilters, setting, scanCallback);
-        if (bluetoothLeScanner != null && scanCallback != null){
-            bluetoothLeScanner.startScan(scanFilters, setting, scanCallback);
-        }
-
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                /*checkBlePermission();
-                bluetoothLeScanner.stopScan(scanCallback);*/
-                handler.postDelayed(this, 3000);
-            }
-        };
-        //timer.schedule(timerTask, 10000);
-    }
-
-    /** 블루투스 스캔 콜백 **/
-    public void setBLEScanCallback(){
-        BluetoothAdapter adapter = ((BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
-        this.mBluetoothAdapter = adapter;
-        this.mScanner = adapter.getBluetoothLeScanner();
-        this.mSettings = new ScanSettings.Builder().setScanMode(2).build();
-        this.mArrayList = null;
-        this.mScanCallback = new ScanCallback() {
-            @Override
-            public void onScanResult(int callbackType, ScanResult result) {
-                String trim;
-                super.onScanResult(callbackType, result);
-                checkBlePermission();
-                ScanRecord scanRecord = result.getScanRecord();
-                TestService.this.mDeviceName = scanRecord.getDeviceName();
-                TestService.this.mRssi = result.getRssi();
-                TestService.this.mDevice = result.getDevice();
-                Log.i(TestService.TAG, "deviceName = " + TestService.this.mDeviceName);
-
-                if (TestService.this.mDeviceName != null) {
-                    if (TestService.this.mDeviceName.contains("FD")) {
-                        TestService.this.mDevice.getAddress().split(":");
-                        if (!TestService.this.mDeviceName.contains(":")) {
-                            trim = TestService.this.mDeviceName.trim();
-                        } else {
-                            trim = TestService.this.mDeviceName.split(":")[0];
-                        }
-                        Log.d(TestService.TAG, "deviceName = " + TestService.this.mDeviceName + ", address = " + TestService.this.mDevice.getAddress() + ", containsKey = " + TestService.this.mRegisteredDevice.containsKey(TestService.this.mDevice.getAddress()) + ", comingDeviceName = " + trim);
-                        if (TestService.this.mRegisteredDevice.containsKey(TestService.this.mDevice.getAddress())) {
-                            return;
-                        }
-
-                        saveStorage = PreferenceManager.getString(context, "saveStorage");
-                        processResult(result, scanBleDeviceList.size());
-
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onBatchScanResults(List<ScanResult> results) {
-                super.onBatchScanResults(results);
-                checkBlePermission();
-                Log.e("onBatchScanResults", "onBatchScanResults");
-
-
-
-                saveStorage = PreferenceManager.getString(context, "saveStorage");
-                for (ScanResult result : results){
-
-                    String trim;
-                    checkBlePermission();
-                    ScanRecord scanRecord = result.getScanRecord();
-                    TestService.this.mDeviceName = scanRecord.getDeviceName();
-                    TestService.this.mRssi = result.getRssi();
-                    TestService.this.mDevice = result.getDevice();
-                    Log.i(TestService.TAG, "deviceName = " + TestService.this.mDeviceName);
-
-                    if (TestService.this.mDeviceName != null) {
-                        if (TestService.this.mDeviceName.contains("FD")) {
-                            TestService.this.mDevice.getAddress().split(":");
-                            if (!TestService.this.mDeviceName.contains(":")) {
-                                trim = TestService.this.mDeviceName.trim();
-                            } else {
-                                trim = TestService.this.mDeviceName.split(":")[0];
-                            }
-                            Log.d(TestService.TAG, "deviceName = " + TestService.this.mDeviceName + ", address = " + TestService.this.mDevice.getAddress() + ", containsKey = " + TestService.this.mRegisteredDevice.containsKey(TestService.this.mDevice.getAddress()) + ", comingDeviceName = " + trim);
-                            if (TestService.this.mRegisteredDevice.containsKey(TestService.this.mDevice.getAddress())) {
-                                return;
-                            }
-
-                            saveStorage = PreferenceManager.getString(context, "saveStorage");
-                            processResult(result, scanBleDeviceList.size());
-
-                        }
-
-                    }
-
-                    processResult(result, results.size());
-                }
-            }
-
-            @Override
-            public void onScanFailed(int errorCode) {
-                super.onScanFailed(errorCode);
-
-            }
-
-            /** 블루투스 스캔 결과 저장 로직_1 **/
-            private void processResult(final ScanResult result, int results_size){
-                Handler handler = new Handler(Looper.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkBlePermission();
-                        if (result != null){
-                            if (!scanBleDeviceList.contains(result.getDevice())){
-                                scanBleDeviceList.add(result.getDevice());
-
-                                // 저장
-                                long now = System.currentTimeMillis();
-                                Date date = new Date(now);
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                                String nowTime = simpleDateFormat.format(date);
-
-                                if (saveStorage == null || saveStorage.trim().isEmpty()){ // 없으면
-
-                                    //setSaveText(String.valueOf(scanBleDeviceList.size()), nowTime);
-                                    if (checkFile()){ // 있으면
-                                        getFile_saveText(String.valueOf(results_size), saveStorage, nowTime);
-                                    }else { // 없으면
-                                        setSaveText(String.valueOf(results_size), nowTime);
-                                    }
-                                }else { // 있으면
-                                    //getFile_saveText(String.valueOf(scanBleDeviceList.size()), saveStorage, nowTime);
-                                    getFile_saveText(String.valueOf(results_size), saveStorage, nowTime);
-                                }
-
-                                if (result.getDevice().getName() != null){
-                                    Log.e("222222222222", result.getDevice().getName());
-                                }
-                                if (result.getDevice().getAddress() != null){
-                                    Log.e("3333333333", result.getDevice().getAddress());
-                                }
-                            }
-                            /*if (result.getDevice().getAddress() != null){
-                                // 중복 확인 (리스트에 같은 주소값이 있으면 add하지 않는다.)
-                                if (!scanBleDeviceAddressList.contains(result.getDevice().getAddress())){
-                                    scanBleDeviceList.add(result.getDevice());
-                                    scanBleDeviceAddressList.add(result.getDevice().getAddress());
-                                }
-                            }*/
-                        }
-                    }
-                });
-            }
-        };
-    }
-
-
-    /** 블루투스 주변 기기 검색 권한 체크 **/
-    public void checkBlePermission(){
-        // 권한 체크 (만약 권한이 허용되어있지 않으면 권한 요청)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (!(permissionManager.permissionCheck(context, Manifest.permission.ACCESS_FINE_LOCATION) ||
-                    permissionManager.permissionCheck(context, Manifest.permission.ACCESS_COARSE_LOCATION) ||
-                    permissionManager.permissionCheck(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION))){
-
-                permissionManager.requestPermission(context, 0 ,new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                });
-
-            }else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-                    if (!(permissionManager.permissionCheck(context, Manifest.permission.BLUETOOTH_CONNECT) ||
-                            permissionManager.permissionCheck(context, Manifest.permission.BLUETOOTH_SCAN) ||
-                            permissionManager.permissionCheck(context, Manifest.permission.BLUETOOTH))){
-
-                        permissionManager.requestPermission(context, 0,new String[]{
-                                Manifest.permission.BLUETOOTH_CONNECT,
-                                Manifest.permission.BLUETOOTH_SCAN,
-                                Manifest.permission.BLUETOOTH
-                        });
-                    }
-                }
-            }
         }
     }
 
