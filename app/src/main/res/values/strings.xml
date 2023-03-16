@@ -17,4 +17,6 @@
     <string name="tv_blood_clot">혈전</string>
     <string name="tv_abscess">농양</string>
     <string name="et_surgeryDate">날짜 시간을 끝까지 적어주세요.</string>
+    <string name="tv_location_permission_warning">위치 또는 블루투스 권한이 허용 되어있지 않아 주변 기기를 검색 할수가 없습니다.\n
+    권한 요청을 거부 하신 경우 앱 정보에서 권한을 허용해주시기 바랍니다.</string>
 </resources>

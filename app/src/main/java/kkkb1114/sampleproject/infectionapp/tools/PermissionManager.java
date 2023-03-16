@@ -11,7 +11,6 @@ public class PermissionManager {
 
     public static final int PERMISSION_REQUEST_LOCATION_CODE = 100;
     public static final int PERMISSION_REQUEST_CODE_LOCATION_S = 101;
-    public static final int PERMISSION_REQUEST_STORAGE_CODE = 102;
 
     /** 권한 확인 **/
     // 기기 SDK 확인을 여기서 안하기 때문에 사용하기전에 SDK 확인 필요하다.
@@ -35,9 +34,6 @@ public class PermissionManager {
                 }else { // SDK 31 이하이면 위치 권한 요청
                     ActivityCompat.requestPermissions((Activity) context, strPermissions, PERMISSION_REQUEST_LOCATION_CODE);
                 }
-
-            }else if (request_permission_type == 1){ // 저장소 권한
-                ActivityCompat.requestPermissions((Activity) context, strPermissions, PERMISSION_REQUEST_STORAGE_CODE);
             }
         } catch (Exception e) {
             e.printStackTrace();
