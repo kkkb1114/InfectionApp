@@ -251,7 +251,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    /** 권한 요청 결과 처리 메서드 **/
+    /** 권한 요청 결과 처리 메서드. **/
     /*@Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
