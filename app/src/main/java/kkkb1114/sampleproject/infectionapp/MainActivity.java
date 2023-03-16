@@ -253,9 +253,7 @@ public class MainActivity extends AppCompatActivity {
                             if (Float.valueOf(temp2) - Float.valueOf(temp1) >= 0)
                                 // temp2: 현재 찍힌 체온, temp1: 5분 전에 찍힌 체온
                                 try {
-                                    Float nowTemp = Float.valueOf(temp2);
-                                    Float beforeTemp = Float.valueOf(temp1);
-                                    setAlarm_inflammation_elevated_bodyTemperature(String.format("%.2f", nowTemp), String.format("%.2f", beforeTemp));
+
                                     cnt = 0;
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -290,8 +288,7 @@ public class MainActivity extends AppCompatActivity {
                 tempStack.add(Double.valueOf(s));
 
                 //todo 여기서 알람 체크 하기
-                tempData = s; // 이건 static으로 현재 체온을 받아 다른 클래스에서 사용하기 위함이고 아래 tempData()메소드로 값을 받을 수 있다.
-                setNotification(s);
+
                 Log.d("------------", String.valueOf(tempStack.size()));
 
 
