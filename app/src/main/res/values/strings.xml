@@ -1,0 +1,20 @@
+<resources>
+    <!--<string name="app_name">bodytemperature</string>-->
+    <string name="app_name">감염 체온</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="et_myProfile_name">이름을 입력하세요</string>
+    <string name="tv_myProfile_birthDate">생년월일 선택</string>
+    <string name="tv_myProfile_weight">몸무게 입력</string>
+    <string name="tv_myProfile_purpose">이용 목적 선택</string>
+    <string name="tv_myProfile_infection">감염 병 선택</string>
+    <string name="tv_myProfile_inflammation">염증 선택</string>
+    <string name="tv_myProfile_purpose_1">감기/독감</string>
+    <string name="tv_myProfile_purpose_2">염증</string>
+    <string name="tv_myProfile_purpose_3">배란</string>
+    <string name="tv_myProfile_purpose_4">감염</string>
+    <string name="tv_surgical_site_infection">수술부위 감염</string>
+    <string name="tv_blood_clot">혈전</string>
+    <string name="tv_abscess">농양</string>
+    <string name="et_surgeryDate">날짜 시간을 끝까지 적어주세요.</string>
+</resources>

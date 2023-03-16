@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.MyProfileActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_transparency_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_myProfile_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@drawable/rounded_corners_white"
+                android:gravity="center"
+                android:hint="@string/et_myProfile_name"
+                android:padding="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/editText_hint"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/rounded_corners_white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_myProfile_man"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingVertical="20dp"
+                    android:text="남성"
+                    android:textSize="20sp"
+                    android:textColor="@color/button_confirm_color"/>
+
+                <TextView
+                    android:id="@+id/tv_myProfile_woman"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingVertical="20dp"
+                    android:text="여성"
+                    android:textSize="20sp"
+                    android:textColor="@color/editText_hint"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_myProfile_birthDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="@string/tv_myProfile_birthDate"
+                android:textSize="20sp"
+                android:textColor="@color/editText_hint"
+                android:background="@drawable/rounded_corners_white"/>
+
+            <TextView
+                android:id="@+id/tv_myProfile_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="@string/tv_myProfile_weight"
+                android:textSize="20sp"
+                android:textColor="@color/editText_hint"
+                android:background="@drawable/rounded_corners_white"/>
+
+            <TextView
+                android:id="@+id/tv_myProfile_purpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="@string/tv_myProfile_purpose_4"
+                android:textSize="20sp"
+                android:textColor="@color/editText_hint"
+                android:background="@drawable/rounded_corners_white"/>
+
+            <TextView
+                android:id="@+id/tv_myProfile_infection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="@string/tv_myProfile_infection"
+                android:textSize="20sp"
+                android:textColor="@color/editText_hint"
+                android:background="@drawable/rounded_corners_white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/bt_myProfile_cancle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="20dp"
+                    android:padding="15dp"
+                    android:text="취소"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_corners_sky"
+                    app:backgroundTint="@null"/>
+
+                <Button
+                    android:id="@+id/bt_myProfile_confirm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="20dp"
+                    android:padding="15dp"
+                    android:text="확인"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_corners_red"
+                    app:backgroundTint="@null"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

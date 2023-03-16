@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.PillActivity">
+
+    <include
+        android:id="@+id/toolbar_pill"
+        layout="@layout/toolbar_pill" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_transparency_10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/edt_pillSearch"
+                android:layout_width="270dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/black_transparency_60"
+                android:ems="10"
+                android:hint="제품명을 입력하세요."
+                android:textColorHint="@color/black_transparency_30"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/bt_pillSearch"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:text="검색" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pill_list"
+            android:layout_width="match_parent"
+            android:layout_height="381dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="36dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/bt_pill_cancle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:padding="15dp"
+                android:text="취소"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_corners_sky"
+                app:backgroundTint="@null"/>
+
+            <Button
+                android:id="@+id/bt_pill_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:padding="15dp"
+                android:text="확인"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_corners_red"
+                app:backgroundTint="@null"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

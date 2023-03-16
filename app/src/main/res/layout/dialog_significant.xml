@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="특이사항 입력"
+        android:textColor="#2498F4"
+        android:textSize="23dp" />
+
+    <EditText
+        android:id="@+id/edt_significant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="15"
+        android:hint="특이사항: ex) 복통있음"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/edt_significantTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="15"
+        android:hint="일시: ex) 2023-03-08 10:00"
+        android:inputType="number"
+        android:maxLength="16"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="통증 정도"
+            android:textSize="15dp" />
+
+        <SeekBar
+            android:id="@+id/seekBar_significant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:progress="0"
+            android:max="9"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/text_seek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="67dp"
+        android:text="통증 없음"
+        android:textSize="15dp" />
+
+</LinearLayout>

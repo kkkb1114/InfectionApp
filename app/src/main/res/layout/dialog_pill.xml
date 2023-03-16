@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="360dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="투여량(mg) 입력"
+        android:textColor="#2498F4"
+        android:textSize="23dp" />
+
+    <EditText
+        android:id="@+id/edt_pill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="15"
+        android:hint="투여량: ex) 50"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/pill_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="투여 일시: ex) 2023-03-08 13:08"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:maxLength="16"/>
+
+
+
+
+</LinearLayout>

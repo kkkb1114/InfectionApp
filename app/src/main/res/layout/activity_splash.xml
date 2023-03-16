@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ln_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".SplashActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:text="몸이 먼저 알려주는 감염 적신호 열\n숨어 있는 열을 잡자"
+        android:textColor="#2196F3"
+        android:textSize="24dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:text="계속 하시려면 화면을 터치해 주세요."
+        android:textColor="@color/black_transparency_30"
+        android:textSize="15dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="491dp"
+        android:layout_marginTop="90dp"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/baby2" />
+</LinearLayout>

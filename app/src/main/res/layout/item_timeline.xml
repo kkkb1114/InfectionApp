@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:id="@+id/timeline_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/timeline_circle"
+                android:layout_width="32dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="20dp"
+                app:srcCompat="@drawable/timeline_circle"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/tv_timeline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:text="dddddddddddddddddddddd"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/timeline_bar"
+            android:layout_width="18dp"
+            android:layout_height="69dp"
+            android:layout_marginLeft="27dp"
+            app:srcCompat="@drawable/timline_bar" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
