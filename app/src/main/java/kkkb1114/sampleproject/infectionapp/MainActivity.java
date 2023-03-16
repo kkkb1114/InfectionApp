@@ -35,6 +35,7 @@ import kkkb1114.sampleproject.infectionapp.database.Bodytemp_DBHelper;
 import kkkb1114.sampleproject.infectionapp.fragment.BodyTemperatureGraphFragment;
 import kkkb1114.sampleproject.infectionapp.fragment.HomeFragment;
 import kkkb1114.sampleproject.infectionapp.fragment.SettingFragment;
+import kkkb1114.sampleproject.infectionapp.service.TestService;
 import kkkb1114.sampleproject.infectionapp.thermometer.Generator;
 import kkkb1114.sampleproject.infectionapp.tools.PreferenceManager;
 import kkkb1114.sampleproject.infectionapp.tools.TimeCalculationManager;
@@ -115,6 +116,17 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat("ibuprofen", 1200);
         editor.putFloat("acetaminophen", 4000);
         editor.commit();
+
+        Intent serviceIntent = new Intent(this, TestService.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.e("MainActivity","111");
+            startForegroundService(serviceIntent);
+        }else {
+            Log.e("MainActivity","222");
+            startService(serviceIntent);
+        }
+
         //날짜 측정
         setUser();
         initView();
@@ -230,8 +242,6 @@ public class MainActivity extends AppCompatActivity {
                     SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     String tempDateTime = dateFormat1.format(date);
 
-                    sqlDB = MainActivity.bodytemp_dbHelper.getWritableDatabase();
-                    sqlDB.execSQL("INSERT INTO TEMPDATA VALUES ('" + username + "', '" + avg + "', '" + tempDateTime + "');");
                     tempDateTime2 = tempDateTime;
 
                     if (purpose.equals("염증")) {
@@ -272,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                 } else
                     s = Generator.ovulation();
 
-                Log.d("temp: ", s);
+
                 homeFragment.setTextThermometerView(Float.valueOf(s));
                 //thermometer.setValueAndStartAnim(Float.valueOf(s));
                 homeFragment.setTextTvTemperature(s);
